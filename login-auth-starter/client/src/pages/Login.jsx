@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 let emptyForm = { 
     username: '',
     password: '',
-    email: ''
+    // email: ''
 }
 
 function Login({ setUser }) {
@@ -20,6 +20,27 @@ function Login({ setUser }) {
     }
 
     const handleSubmit = async (e) => {
+        e.preventDefault()
+        try{
+            // console.log(form)
+    const response=await axios.post("/auth/login",form)
+    console.log(response.data.token)
+   
+    localStorage.setItem("token",response.data.token)
+    const currentUser=await axios.get("/api/users",{
+        headers:{
+     Authorization:"Bearer " + localStorage.getItem("token")
+    
+    }}) 
+
+
+    setUser(currentUser.data)
+    navigate("/profile")
+  
+        }
+        catch(err){
+  console.log(err.message)
+        }
     }
 
     return ( 
