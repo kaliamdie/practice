@@ -4,6 +4,9 @@ import icon from '../assets/react.svg'
 function Navbar({ username, setUser }) {
   
   const logout = () => {
+    setUser({})
+    localStorage.setItem("token","")
+
   };
 
   return (
@@ -32,6 +35,13 @@ function Navbar({ username, setUser }) {
             <Link to="/register">Register</Link>
           </li>
         </>
+      }
+    </ul>
+  );
+}
+
+export default Navbar;
+
       }
     </ul>
   );
